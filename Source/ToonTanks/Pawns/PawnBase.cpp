@@ -8,17 +8,17 @@ APawnBase::APawnBase()
 	PrimaryActorTick.bCanEverTick = true;
 
 	//Sets Components
-	CapsuleComp = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule Collider"));
-	RootComponent = CapsuleComp;
+	capsuleComp = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule Collider"));
+	RootComponent = capsuleComp;
 
-	BaseMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Base Mesh"));
-	BaseMesh->SetupAttachment(RootComponent);
+	baseMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Base Mesh"));
+	baseMesh->SetupAttachment(RootComponent);
 
-	TurretMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Turret Mesh"));
-	TurretMesh->SetupAttachment(BaseMesh);
+	turretMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Turret Mesh"));
+	turretMesh->SetupAttachment(baseMesh);
 
-	ProjectileSpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Projectile Spawn Point"));
-	ProjectileSpawnPoint->SetupAttachment(TurretMesh);
+	projectileSpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Projectile Spawn Point"));
+	projectileSpawnPoint->SetupAttachment(turretMesh);
 }
 
 // Called when the game starts or when spawned
@@ -39,3 +39,23 @@ void APawnBase::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
 
+void APawnBase::RotateTurret(FVector lookAtTarget)
+{
+	// simple subtraction of two vectors to find look direction
+	FVector lookAtTargetCleaned = FVector(lookAtTarget.X, lookAtTarget.Y, turretMesh->GetComponentLocation().Z);
+	FVector startLocation = turretMesh->GetComponentLocation();	
+	FRotator turretRotation = FVector(lookAtTargetCleaned - startLocation).Rotation();
+
+	// set this direction
+	turretMesh->SetWorldRotation(turretRotation);
+	
+}
+
+void APawnBase::Fire()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Bang!"));
+}
+
+void APawnBase::HandleDestruction()
+{
+}

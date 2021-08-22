@@ -25,7 +25,7 @@ private:
 // Functions
 	
 	void CheckFireCondition();
-	float ReturnDistanceToPlayer();
+	float GetDistanceToPlayer();
 	
 public:
 
