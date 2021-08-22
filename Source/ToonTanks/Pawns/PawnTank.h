@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -17,10 +15,24 @@ class TOONTANKS_API APawnTank : public APawnBase
 private:
 	//Components
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components", meta=(AllowPrivateAccess = "true"))
-	USpringArmComponent* SpringArm;
+	USpringArmComponent* springArm;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
-	UCameraComponent* Camera;
+	UCameraComponent* camera;
+
+	//Variables
+	FVector moveDirection;
+	FQuat rotationDirection;
+
+	float moveSpeed = 100.0f;
+	float rotateSpeed = 100.0f;
+
+	//Functions
+	void CalculateMoveInput(float value);
+	void CalculateRotationInput(float value);
+
+	void Move();
+	void Rotate();
 
 public:
 	APawnTank();
