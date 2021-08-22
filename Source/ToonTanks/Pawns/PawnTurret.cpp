@@ -24,7 +24,7 @@ void APawnTurret::Tick(float DeltaTime)
 	}
 }
 
-// Check fire condition and shoot if can
+// Check fire condition and shoot if possible
 void APawnTurret::CheckFireCondition()
 {
 	if(!playerPawn) return;
@@ -40,4 +40,9 @@ float APawnTurret::GetDistanceToPlayer()
 	if(!playerPawn) return 0.0f;
 
 	return  FVector::Distance(playerPawn->GetActorLocation(), GetActorLocation());
+}
+
+void APawnTurret::HandleDestruction()
+{
+	Super::HandleDestruction();
 }
