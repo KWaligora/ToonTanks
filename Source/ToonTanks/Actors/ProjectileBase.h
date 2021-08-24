@@ -31,6 +31,10 @@ private:
 	
 	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite, Category="Damage", meta = (AllowPrivateAccess = "true"))
 	float damage = 50.0f;
+
+// Delegates
+	UFUNCTION()
+	void OnHit(UPrimitiveComponent* hitComp, AActor* otherActor, UPrimitiveComponent* otherComp, FVector normalImpuls, const FHitResult &Hit);
 	
 public:	
 	// Sets default values for this actor's properties

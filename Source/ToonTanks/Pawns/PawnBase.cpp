@@ -54,7 +54,14 @@ void APawnBase::RotateTurret(FVector lookAtTarget)
 
 void APawnBase::Fire()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Bang!"));
+	if(projectileClass)
+	{
+		AProjectileBase* TempProjectile = GetWorld()->SpawnActor<AProjectileBase>(
+			projectileClass,
+			projectileSpawnPoint->GetComponentLocation(),
+			projectileSpawnPoint->GetComponentRotation());
+		TempProjectile->SetOwner(this);
+	}
 }
 
 void APawnBase::HandleDestruction()

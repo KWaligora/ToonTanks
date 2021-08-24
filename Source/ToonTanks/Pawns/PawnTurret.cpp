@@ -31,7 +31,7 @@ void APawnTurret::CheckFireCondition()
 
 	if(GetDistanceToPlayer() <= fireRange)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Fire!"));
+		Fire();
 	}
 }
 
