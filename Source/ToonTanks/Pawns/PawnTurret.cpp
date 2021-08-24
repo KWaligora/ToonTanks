@@ -7,9 +7,9 @@ void APawnTurret::BeginPlay()
 	Super::BeginPlay();
 	
 	// Create timer for shooting
-	GetWorld()->GetTimerManager().SetTimer(fireRateTimerHandle, this, &APawnTurret::CheckFireCondition, fireRate, true);
+	GetWorld()->GetTimerManager().SetTimer(FireRateTimerHandle, this, &APawnTurret::CheckFireCondition, FireRate, true);
 
-	playerPawn = Cast<APawnTank>(UGameplayStatics::GetPlayerPawn(this, 0));
+	PlayerPawn = Cast<APawnTank>(UGameplayStatics::GetPlayerPawn(this, 0));
 }
 
 void APawnTurret::Tick(float DeltaTime)
@@ -17,19 +17,19 @@ void APawnTurret::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	// Handle turret rotation
-	if(!playerPawn) return;
-	if(GetDistanceToPlayer() <= fireRange)
+	if(!PlayerPawn) return;
+	if(GetDistanceToPlayer() <= FireRange)
 	{
-		RotateTurret(playerPawn->GetActorLocation());
+		RotateTurret(PlayerPawn->GetActorLocation());
 	}
 }
 
 // Check fire condition and shoot if possible
 void APawnTurret::CheckFireCondition()
 {
-	if(!playerPawn) return;
+	if(!PlayerPawn) return;
 
-	if(GetDistanceToPlayer() <= fireRange)
+	if(GetDistanceToPlayer() <= FireRange)
 	{
 		Fire();
 	}
@@ -37,9 +37,9 @@ void APawnTurret::CheckFireCondition()
 
 float APawnTurret::GetDistanceToPlayer()
 {
-	if(!playerPawn) return 0.0f;
+	if(!PlayerPawn) return 0.0f;
 
-	return  FVector::Distance(playerPawn->GetActorLocation(), GetActorLocation());
+	return  FVector::Distance(PlayerPawn->GetActorLocation(), GetActorLocation());
 }
 
 void APawnTurret::HandleDestruction()

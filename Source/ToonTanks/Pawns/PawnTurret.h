@@ -15,12 +15,12 @@ private:
 // Variables
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta=(AllowPrivateAccess = "true"))
-	float fireRate = 2.0f;
+	float FireRate = 2.0f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category= "Combat", meta = (AllowPrivateAccess = "true"))
-	float fireRange = 500.0f;
+	float FireRange = 500.0f;
 
-	FTimerHandle fireRateTimerHandle;
-	APawnTank* playerPawn;
+	FTimerHandle FireRateTimerHandle;
+	APawnTank* PlayerPawn;
 
 // Functions
 	
@@ -31,10 +31,10 @@ public:
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	virtual void HandleDestruction() override;
 	
 protected:	
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
-	virtual void HandleDestruction() override;
 };
