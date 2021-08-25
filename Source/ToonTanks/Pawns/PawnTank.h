@@ -20,9 +20,12 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	UCameraComponent* camera;
 
+	UPROPERTY(EditAnywhere, Category = "Effects")
+	TSubclassOf<UCameraShakeBase> DeathShake;
+
 	// Variables
-	FVector moveDirection;
-	FQuat rotationDirection;
+	FVector MoveDirection;
+	FQuat RotationDirection;
 	bool bIsPlayerAlive = true;
 
 	APlayerController* playerController;

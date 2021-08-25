@@ -50,7 +50,7 @@ void APawnTank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 // Calculate move direction
 void APawnTank::CalculateMoveInput(float value)
 {
-	moveDirection = FVector(value * moveSpeed * GetWorld()->DeltaTimeSeconds, 0, 0);
+	MoveDirection = FVector(value * moveSpeed * GetWorld()->DeltaTimeSeconds, 0, 0);
 }
 
 // Calculate Tank rotation
@@ -58,19 +58,19 @@ void APawnTank::CalculateRotationInput(float value)
 {
 	float rotateAmount = value * rotateSpeed * GetWorld()->DeltaTimeSeconds;
 	FRotator rotation = FRotator(0, rotateAmount, 0);
-	rotationDirection = FQuat(rotation);
+	RotationDirection = FQuat(rotation);
 }
 
 // Move Tank
 void APawnTank::Move()
 {
-	AddActorLocalOffset(moveDirection, true);
+	AddActorLocalOffset(MoveDirection, true);
 }
 
 // Rotate Tank
 void APawnTank::Rotate()
 {
-	AddActorLocalRotation(rotationDirection, true);
+	AddActorLocalRotation(RotationDirection, true);
 }
 
 bool APawnTank::GetIsPlayerAlive()
@@ -86,4 +86,5 @@ void APawnTank::HandleDestruction()
 
 	SetActorHiddenInGame(true);
 	SetActorTickEnabled(false);
+	//GetWorld()->GetFirstPlayerController()->ClientStartCameraShake(DeathShake); //Crash
 }
