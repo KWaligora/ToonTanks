@@ -30,6 +30,8 @@ AProjectileBase::AProjectileBase()
 void AProjectileBase::BeginPlay()
 {
 	Super::BeginPlay();
+
+	UGameplayStatics::PlaySoundAtLocation(this, LaunchSound, GetActorLocation());
 	
 	// delegate OnHit()
 	ProjectileMesh->OnComponentHit.AddDynamic(this, &AProjectileBase::OnHit);
@@ -45,6 +47,7 @@ void AProjectileBase::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UP
 	// if the other actor ISN'T self or owner and exist, then apply damage
 	if(OtherActor && OtherActor != this && OtherActor != myOwner)
 	{
+		UGameplayStatics::PlaySoundAtLocation(this, HitSound, GetActorLocation());
 		UGameplayStatics::ApplyDamage(OtherActor, Damage, myOwner->GetInstigatorController(), this, DamageType);
 		UGameplayStatics::SpawnEmitterAtLocation(this, HitParticle, GetActorLocation());
 		Destroy();

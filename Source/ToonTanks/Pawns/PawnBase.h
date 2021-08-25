@@ -36,7 +36,10 @@ private:
 	TSubclassOf<AProjectileBase> ProjectileClass;
 
 	UPROPERTY(EditAnywhere, Category = "Effects")
-	UParticleSystem* DeathParticle;	
+	UParticleSystem* DeathParticle;
+
+	UPROPERTY(EditAnywhere, Category = "Sound")
+	USoundBase* DeathSound;
 	
 
 public:
