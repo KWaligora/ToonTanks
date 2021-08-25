@@ -4,6 +4,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "Particles/ParticleSystemComponent.h"
 
 // Sets default values
 AProjectileBase::AProjectileBase()
@@ -12,11 +13,14 @@ AProjectileBase::AProjectileBase()
 	PrimaryActorTick.bCanEverTick = false;
 
 	// Create and set default component
-	projectileMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Projectile Mesh"));	
-	RootComponent = projectileMesh;	
-	projectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("Projectile Movement"));
-	projectileMovement->InitialSpeed = movementSpeed;
-	projectileMovement->MaxSpeed = movementSpeed;
+	ProjectileMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Projectile Mesh"));	
+	RootComponent = ProjectileMesh;	
+	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("Projectile Movement"));
+	ProjectileMovement->InitialSpeed = MovementSpeed;
+	ProjectileMovement->MaxSpeed = MovementSpeed;
+
+	ParticleTrail = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("Particle Trail"));
+	ParticleTrail->SetupAttachment(RootComponent);
 
 	// How long this actor exist in scene 
 	InitialLifeSpan = 3.0f;
@@ -28,21 +32,22 @@ void AProjectileBase::BeginPlay()
 	Super::BeginPlay();
 	
 	// delegate OnHit()
-	projectileMesh->OnComponentHit.AddDynamic(this, &AProjectileBase::OnHit);
+	ProjectileMesh->OnComponentHit.AddDynamic(this, &AProjectileBase::OnHit);
 }
 
 // On projectile hit
-void AProjectileBase::OnHit(UPrimitiveComponent* hitComp, AActor* otherActor, UPrimitiveComponent* otherComp,
-	FVector normalImpuls, const FHitResult& Hit)
+void AProjectileBase::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+	FVector NormalImpuls, const FHitResult& Hit)
 {
 	AActor* myOwner = GetOwner();
 	if(!myOwner) return;
 
 	// if the other actor ISN'T self or owner and exist, then apply damage
-	if(otherActor && otherActor != this && otherActor != myOwner)
+	if(OtherActor && OtherActor != this && OtherActor != myOwner)
 	{
-		UGameplayStatics::ApplyDamage(otherActor, damage, myOwner->GetInstigatorController(), this, damageType);
-	}
-	Destroy();
+		UGameplayStatics::ApplyDamage(OtherActor, Damage, myOwner->GetInstigatorController(), this, DamageType);
+		UGameplayStatics::SpawnEmitterAtLocation(this, HitParticle, GetActorLocation());
+		Destroy();
+	}	
 }
 

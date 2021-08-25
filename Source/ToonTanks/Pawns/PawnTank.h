@@ -23,6 +23,7 @@ private:
 	// Variables
 	FVector moveDirection;
 	FQuat rotationDirection;
+	bool bIsPlayerAlive = true;
 
 	APlayerController* playerController;
 
@@ -48,6 +49,8 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	bool GetIsPlayerAlive();
 
 	virtual void HandleDestruction() override;
 

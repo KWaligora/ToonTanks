@@ -17,24 +17,30 @@ private:
 // Exposed Variables
 	// Components
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="Components", meta = (AllowPrivateAccess = "true"))
-	UProjectileMovementComponent* projectileMovement;
+	UProjectileMovementComponent* ProjectileMovement;
 	
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="Components", meta = (AllowPrivateAccess = "true"))
-	UStaticMeshComponent* projectileMesh;
+	UStaticMeshComponent* ProjectileMesh;
+
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="Components", meta = (AllowPrivateAccess = "true"))
+	UParticleSystemComponent* ParticleTrail;
 	
 	// Variables
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="Movement", meta = (AllowPrivateAccess = "true"))
-	float movementSpeed = 1300.0f;
+	float MovementSpeed = 1300.0f;
 	
 	UPROPERTY(EditDefaultsOnly, Category="Damage")
-	TSubclassOf<UDamageType> damageType;	
+	TSubclassOf<UDamageType> DamageType;	
 	
 	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite, Category="Damage", meta = (AllowPrivateAccess = "true"))
-	float damage = 50.0f;
+	float Damage = 50.0f;
 
+	UPROPERTY(EditAnywhere, Category="Effects")
+	UParticleSystem* HitParticle;
+	
 // Delegates
 	UFUNCTION()
-	void OnHit(UPrimitiveComponent* hitComp, AActor* otherActor, UPrimitiveComponent* otherComp, FVector normalImpuls, const FHitResult &Hit);
+	void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpuls, const FHitResult &Hit);
 	
 public:	
 	// Sets default values for this actor's properties
